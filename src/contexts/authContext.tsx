@@ -12,7 +12,7 @@ export const AuthContext = createContext<AuthContextState | undefined>(undefined
 export function useAuthContext() {
   const context = useContext(AuthContext);
 
-  if (!context) throw Error('Must be inside of a provider');
+  if (!context) throw new Error('Must be inside of a provider');
 
   return context;
 }

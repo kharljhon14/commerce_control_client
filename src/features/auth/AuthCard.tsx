@@ -1,5 +1,8 @@
+'use client';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import SignInForm from './SignInForm';
+import { AuthContextProvider } from '@/contexts/authContext';
+import AuthForms from './AuthForms';
 
 export default function AuthCard() {
   return (
@@ -8,7 +11,9 @@ export default function AuthCard() {
         <CardTitle className="text-2xl">Sign In</CardTitle>
       </CardHeader>
       <CardContent>
-        <SignInForm />
+        <AuthContextProvider>
+          <AuthForms />
+        </AuthContextProvider>
       </CardContent>
     </Card>
   );
