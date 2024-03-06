@@ -5,27 +5,57 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuthContext } from '@/contexts/authContext';
+import { SignInSchema, SignInSchemaType } from '@/schemas/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 export default function SignInForm() {
   const { handleState } = useAuthContext();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInSchemaType>({
+    resolver: zodResolver(SignInSchema),
+  });
+
+  const onSubmit: SubmitHandler<SignInSchemaType> = (data) => {
+    console.log(data);
+  };
+
   return (
-    <form autoComplete="off">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      autoComplete="off"
+    >
       <div className="space-y-2">
         <div>
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
-            name="email"
+            {...register('email')}
           />
+          <Label
+            htmlFor="email"
+            className="text-xs text-red-500"
+          >
+            {errors.email?.message}
+          </Label>
         </div>
 
         <div>
           <Label htmlFor="password">Password</Label>
           <PasswordInput
             id="password"
-            name="password"
+            register={register('password')}
           />
+          <Label
+            htmlFor="password"
+            className="text-xs text-red-500"
+          >
+            {errors.password?.message}
+          </Label>
         </div>
       </div>
 
