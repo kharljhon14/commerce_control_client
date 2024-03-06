@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useContext, useState } from 'react';
+import { PropsWithChildren, createContext, useContext, useMemo, useState } from 'react';
 
 export type AuthState = 'sign-in' | 'sign-up' | 'forgot-password';
 
@@ -20,9 +20,13 @@ export function useAuthContext() {
 export function AuthContextProvider({ children }: PropsWithChildren) {
   const [state, setState] = useState<AuthState>('sign-in');
 
-  const handleState = (newState: AuthState) => {
-    setState(newState);
-  };
+  const contextValue = useMemo<AuthContextState>(
+    () => ({
+      state,
+      handleState: (newState) => setState(newState),
+    }),
+    [state]
+  );
 
-  return <AuthContext.Provider value={{ state, handleState }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
 }

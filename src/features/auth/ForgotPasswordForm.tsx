@@ -1,12 +1,9 @@
-'use client';
-
-import PasswordInput from '@/components/customs/PasswordInput';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useAuthContext } from '@/contexts/authContext';
+import { Label } from '@radix-ui/react-label';
 
-export default function SignInForm() {
+export default function ForgotPasswordForm() {
   const { handleState } = useAuthContext();
 
   return (
@@ -19,14 +16,6 @@ export default function SignInForm() {
             name="email"
           />
         </div>
-
-        <div>
-          <Label htmlFor="password">Password</Label>
-          <PasswordInput
-            id="password"
-            name="password"
-          />
-        </div>
       </div>
 
       <div className="flex justify-between mx-4 mt-2">
@@ -34,9 +23,9 @@ export default function SignInForm() {
           type="button"
           variant="link"
           className="text-blue-500 p-0"
-          onClick={() => handleState('forgot-password')}
+          onClick={() => handleState('sign-in')}
         >
-          Forgot Password
+          Sign In
         </Button>
 
         <Button
