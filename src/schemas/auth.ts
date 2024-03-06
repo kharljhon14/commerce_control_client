@@ -46,3 +46,13 @@ export const SignUpSchema = z
   });
 
 export type SignUpSchemaType = z.infer<typeof SignUpSchema>;
+
+export const ForgotPasswordSchema = z.object({
+  email: z
+    .string()
+    .min(1, 'Email is required')
+    .max(64, 'Email must not exceed 64 characters')
+    .email('Must be a valid email'),
+});
+
+export type ForgotPasswordSchemaType = z.infer<typeof ForgotPasswordSchema>;
