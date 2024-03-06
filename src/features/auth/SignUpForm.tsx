@@ -35,10 +35,10 @@ export default function SignUphtmlForm() {
         </div>
 
         <div>
-          <Label htmlFor="confirm-password">Confirm Password</Label>
+          <Label htmlFor="confirm_password">Confirm Password</Label>
           <PasswordInput
-            id="confirm-password"
-            name="confirm-password"
+            id="confirm_password"
+            name="confirm_password"
           />
         </div>
       </div>
