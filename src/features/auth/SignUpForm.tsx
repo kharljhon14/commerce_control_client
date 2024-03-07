@@ -3,43 +3,83 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuthContext } from '@/contexts/authContext';
+import { SignUpSchema, SignUpSchemaType } from '@/schemas/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 export default function SignUphtmlForm() {
   const { handleState } = useAuthContext();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpSchemaType>({ resolver: zodResolver(SignUpSchema) });
+
+  const onSubmit: SubmitHandler<SignUpSchemaType> = (data) => {
+    console.log(data);
+  };
+
   return (
-    <form autoComplete="off">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      autoComplete="off"
+    >
       <div className="space-y-2">
         <div>
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
-            name="email"
+            {...register('email')}
           />
+          <Label
+            htmlFor="email"
+            className="text-xs text-red-500"
+          >
+            {errors.email?.message}
+          </Label>
         </div>
 
         <div>
           <Label htmlFor="name">Name</Label>
           <Input
             id="name"
-            name="name"
+            {...register('name')}
           />
+          <Label
+            htmlFor="name"
+            className="text-xs text-red-500"
+          >
+            {errors.name?.message}
+          </Label>
         </div>
 
         <div>
           <Label htmlFor="password">Password</Label>
           <PasswordInput
             id="password"
-            name="password"
+            register={register('password')}
           />
+          <Label
+            htmlFor="password"
+            className="text-xs text-red-500"
+          >
+            {errors.password?.message}
+          </Label>
         </div>
 
         <div>
           <Label htmlFor="confirm_password">Confirm Password</Label>
           <PasswordInput
             id="confirm_password"
-            name="confirm_password"
+            register={register('confirm_password')}
           />
+          <Label
+            htmlFor="confirm_password"
+            className="text-xs text-red-500"
+          >
+            {errors.confirm_password?.message}
+          </Label>
         </div>
       </div>
 
