@@ -20,8 +20,19 @@ export default function SignInForm() {
     resolver: zodResolver(SignInSchema),
   });
 
-  const onSubmit: SubmitHandler<SignInSchemaType> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<SignInSchemaType> = async (data) => {
+    const res = await fetch('http://localhost:8000/auth/sign-in', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      alert(error.message);
+    }
   };
 
   return (
