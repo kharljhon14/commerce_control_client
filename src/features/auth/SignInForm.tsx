@@ -1,5 +1,6 @@
 'use client';
 
+import Cookie from 'js-cookie';
 import PasswordInput from '@/components/customs/PasswordInput';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -33,6 +34,10 @@ export default function SignInForm() {
       const error = await res.json();
       alert(error.message);
     }
+
+    const body = await res.json();
+
+    Cookie.set('session', body.data.token, { expires: 7 });
   };
 
   return (
