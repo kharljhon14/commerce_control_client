@@ -1,5 +1,6 @@
 'use client';
 
+import Cookie from 'js-cookie';
 import PasswordInput from '@/components/customs/PasswordInput';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,10 +9,11 @@ import { useAuthContext } from '@/contexts/authContext';
 import { SignInSchema, SignInSchemaType } from '@/schemas/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
 export default function SignInForm() {
   const { handleState } = useAuthContext();
-
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -32,7 +34,15 @@ export default function SignInForm() {
     if (!res.ok) {
       const error = await res.json();
       alert(error.message);
+
+      return;
     }
+
+    const body = await res.json();
+
+    Cookie.set('session', body.data.token, { expires: 7 });
+
+    router.push('/');
   };
 
   return (
