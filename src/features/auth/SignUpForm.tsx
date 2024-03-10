@@ -30,6 +30,7 @@ export default function SignUphtmlForm() {
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
+            errorMessage={errors.email?.message}
             {...register('email')}
           />
           <Label
@@ -44,6 +45,7 @@ export default function SignUphtmlForm() {
           <Label htmlFor="name">Name</Label>
           <Input
             id="name"
+            errorMessage={errors.name?.message}
             {...register('name')}
           />
           <Label
@@ -58,6 +60,7 @@ export default function SignUphtmlForm() {
           <Label htmlFor="password">Password</Label>
           <PasswordInput
             id="password"
+            errorMessage={errors.password?.message}
             register={register('password')}
           />
           <Label
@@ -72,6 +75,7 @@ export default function SignUphtmlForm() {
           <Label htmlFor="confirm_password">Confirm Password</Label>
           <PasswordInput
             id="confirm_password"
+            errorMessage={errors.confirm_password?.message}
             register={register('confirm_password')}
           />
           <Label
