@@ -29,6 +29,7 @@ export default function ForgotPasswordForm() {
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
+            errorMessage={errors.email?.message}
             {...register('email')}
           />
           <Label

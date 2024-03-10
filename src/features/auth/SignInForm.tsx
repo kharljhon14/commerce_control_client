@@ -55,6 +55,7 @@ export default function SignInForm() {
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
+            errorMessage={errors.email?.message}
             {...register('email')}
           />
           <Label
@@ -69,6 +70,7 @@ export default function SignInForm() {
           <Label htmlFor="password">Password</Label>
           <PasswordInput
             id="password"
+            errorMessage={errors.password?.message}
             register={register('password')}
           />
           <Label
