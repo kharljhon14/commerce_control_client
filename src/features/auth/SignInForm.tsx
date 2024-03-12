@@ -10,6 +10,7 @@ import { SignInSchema, SignInSchemaType } from '@/schemas/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import { fetchRequest } from '@/lib/utils';
 
 export default function SignInForm() {
   const { handleState } = useAuthContext();
@@ -23,20 +24,12 @@ export default function SignInForm() {
   });
 
   const onSubmit: SubmitHandler<SignInSchemaType> = async (data) => {
-    const res = await fetch('http://localhost:8000/auth/sign-in', {
-      method: 'POST',
+    const res = await fetchRequest('http://localhost:8000/auth/sign-in', data, {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      method: 'POST',
     });
-
-    if (!res.ok) {
-      const error = await res.json();
-      alert(error.message);
-
-      return;
-    }
 
     const body = await res.json();
 

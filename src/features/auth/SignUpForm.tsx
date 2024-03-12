@@ -3,8 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuthContext } from '@/contexts/authContext';
+import { fetchRequest } from '@/lib/utils';
 import { SignUpSchema, SignUpSchemaType } from '@/schemas/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Cookie } from 'next/font/google';
+import router from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 export default function SignUphtmlForm() {
@@ -16,8 +19,17 @@ export default function SignUphtmlForm() {
     formState: { errors },
   } = useForm<SignUpSchemaType>({ resolver: zodResolver(SignUpSchema) });
 
-  const onSubmit: SubmitHandler<SignUpSchemaType> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<SignUpSchemaType> = async (data) => {
+    const res = await fetchRequest('http://localhost:8000/auth/sign-up', data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    });
+
+    const body = await res.json();
+
+    console.log(body);
   };
 
   return (
