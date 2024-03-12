@@ -6,8 +6,6 @@ import { useAuthContext } from '@/contexts/authContext';
 import { fetchRequest } from '@/lib/utils';
 import { SignUpSchema, SignUpSchemaType } from '@/schemas/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Cookie } from 'next/font/google';
-import router from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 export default function SignUphtmlForm() {
@@ -20,16 +18,20 @@ export default function SignUphtmlForm() {
   } = useForm<SignUpSchemaType>({ resolver: zodResolver(SignUpSchema) });
 
   const onSubmit: SubmitHandler<SignUpSchemaType> = async (data) => {
-    const res = await fetchRequest('http://localhost:8000/auth/sign-up', data, {
+    const res = await fetch('http://localhost:8000/auth/sign-up', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      method: 'POST',
+      body: JSON.stringify(data),
     });
 
-    const body = await res.json();
+    if (!res.ok) {
+      const error = await res.json();
+      alert(error.message);
 
-    console.log(body);
+      return;
+    }
   };
 
   return (

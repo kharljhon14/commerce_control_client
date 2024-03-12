@@ -24,12 +24,20 @@ export default function SignInForm() {
   });
 
   const onSubmit: SubmitHandler<SignInSchemaType> = async (data) => {
-    const res = await fetchRequest('http://localhost:8000/auth/sign-in', data, {
+    const res = await fetch('http://localhost:8000/auth/sign-in', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      method: 'POST',
+      body: JSON.stringify(data),
     });
+
+    if (!res.ok) {
+      const error = await res.json();
+      alert(error.message);
+
+      return;
+    }
 
     const body = await res.json();
 
