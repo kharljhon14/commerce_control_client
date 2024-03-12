@@ -15,8 +15,21 @@ export default function ForgotPasswordForm() {
     formState: { errors },
   } = useForm<ForgotPasswordSchemaType>({ resolver: zodResolver(ForgotPasswordSchema) });
 
-  const onSubmit: SubmitHandler<ForgotPasswordSchemaType> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ForgotPasswordSchemaType> = async (data) => {
+    const res = await fetch('http://localhost:8000/auth/forgot-password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      alert(error.message);
+
+      return;
+    }
   };
 
   return (
