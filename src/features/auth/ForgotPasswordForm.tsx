@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAuthContext } from '@/contexts/authContext';
-import { fetchRequest } from '@/lib/utils';
 import { ForgotPasswordSchema, ForgotPasswordSchemaType } from '@/schemas/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Label } from '@radix-ui/react-label';

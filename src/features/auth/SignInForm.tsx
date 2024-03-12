@@ -10,7 +10,6 @@ import { SignInSchema, SignInSchemaType } from '@/schemas/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { fetchRequest } from '@/lib/utils';
 
 export default function SignInForm() {
   const { handleState } = useAuthContext();
