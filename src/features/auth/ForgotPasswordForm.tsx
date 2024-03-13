@@ -1,14 +1,14 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useAuthContext } from '@/contexts/authContext';
 import { ForgotPasswordSchema, ForgotPasswordSchemaType } from '@/schemas/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Label } from '@radix-ui/react-label';
+import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 export default function ForgotPasswordForm() {
-  const { handleState } = useAuthContext();
-
   const {
     register,
     handleSubmit,
@@ -55,23 +55,19 @@ export default function ForgotPasswordForm() {
       </div>
 
       <div className="flex justify-between mx-4 mt-2">
-        <Button
-          type="button"
-          variant="link"
+        <Link
+          href="/auth/sign-up"
           className="text-blue-500 p-0"
-          onClick={() => handleState('sign-in')}
-        >
-          Sign In
-        </Button>
-
-        <Button
-          type="button"
-          variant="link"
-          className="text-blue-500 p-0"
-          onClick={() => handleState('sign-up')}
         >
           Sign Up
-        </Button>
+        </Link>
+
+        <Link
+          href="/auth/sign-in"
+          className="text-blue-500 p-0"
+        >
+          Sign In
+        </Link>
       </div>
 
       <Button
