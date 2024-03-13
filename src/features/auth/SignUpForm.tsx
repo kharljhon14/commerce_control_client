@@ -1,15 +1,15 @@
+'use client';
+
 import PasswordInput from '@/components/customs/PasswordInput';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAuthContext } from '@/contexts/authContext';
 import { SignUpSchema, SignUpSchemaType } from '@/schemas/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-export default function SignUphtmlForm() {
-  const { handleState } = useAuthContext();
-
+export default function SignUpForm() {
   const {
     register,
     handleSubmit,
@@ -101,23 +101,19 @@ export default function SignUphtmlForm() {
       </div>
 
       <div className="flex justify-between mx-4 mt-2">
-        <Button
-          type="button"
-          variant="link"
+        <Link
+          href="/auth/forgot-password"
           className="text-blue-500 p-0"
-          onClick={() => handleState('forgot-password')}
         >
           Forgot Password
-        </Button>
+        </Link>
 
-        <Button
-          type="button"
-          variant="link"
+        <Link
+          href="/auth/sign-in"
           className="text-blue-500 p-0"
-          onClick={() => handleState('sign-in')}
         >
           Sign In
-        </Button>
+        </Link>
       </div>
 
       <Button
