@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-import AuthForms from './AuthForms';
 import { PropsWithChildren } from 'react';
 
 interface Props extends PropsWithChildren {
