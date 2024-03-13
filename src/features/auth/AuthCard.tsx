@@ -1,23 +1,19 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import AuthForms from './AuthForms';
-import { useAuthContext } from '@/contexts/authContext';
+import { PropsWithChildren } from 'react';
 
-export default function AuthCard() {
-  const { state } = useAuthContext();
+interface Props extends PropsWithChildren {
+  title: string;
+}
 
+export default function AuthCard({ children, title }: Props) {
   return (
     <Card className="max-w-lg w-full">
       <CardHeader>
-        <CardTitle className="text-2xl text-center">
-          {state === 'sign-in' && 'Sign In'}
-          {state === 'sign-up' && 'Sign Up'}
-          {state === 'forgot-password' && 'Forgot Password'}
-        </CardTitle>
+        <CardTitle className="text-2xl text-center">{title}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <AuthForms />
-      </CardContent>
+      <CardContent>{children}</CardContent>
     </Card>
   );
 }
