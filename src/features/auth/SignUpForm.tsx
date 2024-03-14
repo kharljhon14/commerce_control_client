@@ -1,15 +1,19 @@
 'use client';
 
 import PasswordInput from '@/components/customs/PasswordInput';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { SignUpSchema, SignUpSchemaType } from '@/schemas/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 export default function SignUpForm() {
+  const [errorMessage, setErrorMessage] = useState('');
+
   const {
     register,
     handleSubmit,
@@ -17,6 +21,7 @@ export default function SignUpForm() {
   } = useForm<SignUpSchemaType>({ resolver: zodResolver(SignUpSchema) });
 
   const onSubmit: SubmitHandler<SignUpSchemaType> = async (data) => {
+    setErrorMessage('');
     const res = await fetch('http://localhost:8000/auth/sign-up', {
       method: 'POST',
       headers: {
@@ -27,101 +32,110 @@ export default function SignUpForm() {
 
     if (!res.ok) {
       const error = await res.json();
-      alert(error.message);
+      setErrorMessage(error.message);
 
       return;
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      autoComplete="off"
-    >
-      <div className="space-y-2">
-        <div>
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            errorMessage={errors.email?.message}
-            {...register('email')}
-          />
-          <Label
-            htmlFor="email"
-            className="text-xs text-red-500"
-          >
-            {errors.email?.message}
-          </Label>
-        </div>
+    <div className="space-y-4">
+      {errorMessage && (
+        <Alert variant="destructive">
+          <AlertTitle>Something went wrong!</AlertTitle>
+          <AlertDescription>{errorMessage}</AlertDescription>
+        </Alert>
+      )}
 
-        <div>
-          <Label htmlFor="name">Name</Label>
-          <Input
-            id="name"
-            errorMessage={errors.name?.message}
-            {...register('name')}
-          />
-          <Label
-            htmlFor="name"
-            className="text-xs text-red-500"
-          >
-            {errors.name?.message}
-          </Label>
-        </div>
-
-        <div>
-          <Label htmlFor="password">Password</Label>
-          <PasswordInput
-            id="password"
-            errorMessage={errors.password?.message}
-            register={register('password')}
-          />
-          <Label
-            htmlFor="password"
-            className="text-xs text-red-500"
-          >
-            {errors.password?.message}
-          </Label>
-        </div>
-
-        <div>
-          <Label htmlFor="confirm_password">Confirm Password</Label>
-          <PasswordInput
-            id="confirm_password"
-            errorMessage={errors.confirm_password?.message}
-            register={register('confirm_password')}
-          />
-          <Label
-            htmlFor="confirm_password"
-            className="text-xs text-red-500"
-          >
-            {errors.confirm_password?.message}
-          </Label>
-        </div>
-      </div>
-
-      <div className="flex justify-between mx-4 mt-2">
-        <Link
-          href="/auth/forgot-password"
-          className="text-blue-500 p-0"
-        >
-          Forgot Password
-        </Link>
-
-        <Link
-          href="/auth/sign-in"
-          className="text-blue-500 p-0"
-        >
-          Sign In
-        </Link>
-      </div>
-
-      <Button
-        className="w-full mt-6"
-        size="lg"
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        autoComplete="off"
       >
-        Submit
-      </Button>
-    </form>
+        <div className="space-y-2">
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              errorMessage={errors.email?.message}
+              {...register('email')}
+            />
+            <Label
+              htmlFor="email"
+              className="text-xs text-red-500"
+            >
+              {errors.email?.message}
+            </Label>
+          </div>
+
+          <div>
+            <Label htmlFor="name">Name</Label>
+            <Input
+              id="name"
+              errorMessage={errors.name?.message}
+              {...register('name')}
+            />
+            <Label
+              htmlFor="name"
+              className="text-xs text-red-500"
+            >
+              {errors.name?.message}
+            </Label>
+          </div>
+
+          <div>
+            <Label htmlFor="password">Password</Label>
+            <PasswordInput
+              id="password"
+              errorMessage={errors.password?.message}
+              register={register('password')}
+            />
+            <Label
+              htmlFor="password"
+              className="text-xs text-red-500"
+            >
+              {errors.password?.message}
+            </Label>
+          </div>
+
+          <div>
+            <Label htmlFor="confirm_password">Confirm Password</Label>
+            <PasswordInput
+              id="confirm_password"
+              errorMessage={errors.confirm_password?.message}
+              register={register('confirm_password')}
+            />
+            <Label
+              htmlFor="confirm_password"
+              className="text-xs text-red-500"
+            >
+              {errors.confirm_password?.message}
+            </Label>
+          </div>
+        </div>
+
+        <div className="flex justify-between mx-4 mt-2">
+          <Link
+            href="/auth/forgot-password"
+            className="text-blue-500 p-0"
+          >
+            Forgot Password
+          </Link>
+
+          <Link
+            href="/auth/sign-in"
+            className="text-blue-500 p-0"
+          >
+            Sign In
+          </Link>
+        </div>
+
+        <Button
+          className="w-full mt-6"
+          size="lg"
+        >
+          Submit
+        </Button>
+      </form>
+    </div>
   );
 }
