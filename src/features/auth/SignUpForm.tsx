@@ -21,6 +21,7 @@ export default function SignUpForm() {
   } = useForm<SignUpSchemaType>({ resolver: zodResolver(SignUpSchema) });
 
   const onSubmit: SubmitHandler<SignUpSchemaType> = async (data) => {
+    setErrorMessage('');
     const res = await fetch('http://localhost:8000/auth/sign-up', {
       method: 'POST',
       headers: {
