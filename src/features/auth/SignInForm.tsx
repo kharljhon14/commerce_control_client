@@ -44,7 +44,7 @@ export default function SignInForm() {
 
     const body = await res.json();
 
-    Cookie.set('session', body.data.token, { expires: 7 });
+    Cookie.set('JWT-session', body.data.token, { expires: 7 });
 
     router.push('/');
   };
