@@ -1,5 +1,5 @@
-import { url } from 'inspector';
 import { NextRequest, NextResponse } from 'next/server';
+import { ROUTES } from './constants/routes';
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -29,5 +29,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/auth/:path*', '/'],
+  matcher: ['/auth/:path*', '/', '/products'],
 };
