@@ -1,12 +1,14 @@
+import { url } from 'inspector';
 import { NextRequest, NextResponse } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const authenticatedRoutes = ['/'];
-  const restrictedRoutes = ['/auth/sign-in', '/auth/sign-up', '/auth/forgot-password'];
+  const authenticatedRoutes = [ROUTES.home];
+  const restrictedRoutes = [ROUTES.signIn, ROUTES.signUp, ROUTES.forgotPassword];
 
   try {
+    // Get the cookie and check if the cookie has exists
     const jwtSession = request.cookies.get('JWT-session');
 
     if (authenticatedRoutes.includes(pathname)) {
@@ -20,7 +22,9 @@ export function middleware(request: NextRequest) {
 
     return NextResponse.next();
   } catch (err) {
-    // Todo: Handle error handling
+    request.cookies.delete('JWT-session');
+
+    return NextResponse.redirect(new URL('/auth/sign-in', request.url));
   }
 }
 
