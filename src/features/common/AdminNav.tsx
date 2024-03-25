@@ -31,7 +31,7 @@ export default function AdminNav() {
       <Link href={ROUTES.home}>
         <h1 className="bg-gray-400 m-4 p-6 rounded-md text-lg font-semibold ">Commerce Control</h1>
       </Link>
-      <menu className="flex flex-col">
+      <nav className="flex flex-col">
         {NAV_ROUTES.map(({ name, path }) => (
           <Link
             key={name}
@@ -40,10 +40,10 @@ export default function AdminNav() {
             } transition-colors duration-300 hover:bg-gray-400`}
             href={path}
           >
-            <li>{name}</li>
+            {name}
           </Link>
         ))}
-      </menu>
+      </nav>
     </aside>
   );
 }
