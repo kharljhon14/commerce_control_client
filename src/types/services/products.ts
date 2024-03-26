@@ -4,6 +4,7 @@ export interface Product {
   description: string;
   image: string;
   price: number;
+  brand: string;
   on_sale: boolean;
   created_at: string;
   updated_at: string;
