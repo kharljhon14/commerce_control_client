@@ -11,7 +11,7 @@ export interface Product {
   category_name: string;
 }
 
-export interface ProductsRequest {
+export interface ProductsResponse {
   message: string;
-  date: Product[];
+  data: Product[];
 }

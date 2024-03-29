@@ -6,7 +6,7 @@ import {
   TableRow,
   TableHead,
   TableBody,
-  TableCell,
+  TableCell
 } from '@/components/ui/table';
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
@@ -19,7 +19,7 @@ export default function DataTable<TData, TValue>({ columns, data }: Props<TData,
   const table = useReactTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
+    getCoreRowModel: getCoreRowModel()
   });
 
   return (
