@@ -1,24 +1,24 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import Cookies from 'js-cookie';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// export async function fetchRequest(
-//   url: string | URL | Request,
-//   body: any,
-//   opts: RequestInit
-// ): Promise<any> {
-//   const res = await fetch(url, {
-//     body: JSON.stringify(body),
-//     ...opts,
-//   });
+export async function fetcher(url: string | URL | Request): Promise<any> {
+  const token = Cookies.get('JWT-session');
 
-//   if (!res.ok) {
-//     const error = await res.json();
-//     return error.message;
-//   }
+  const res = await fetch(url, {
+    headers: {
+      Authorization: token ? `Bearer ${token}` : ''
+    }
+  });
 
-//   return res;
-// }
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.message);
+  }
+
+  return res.json();
+}

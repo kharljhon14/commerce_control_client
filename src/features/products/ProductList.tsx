@@ -1,10 +1,11 @@
 'use client';
 
-import { getProducts } from '@/apis/products';
 import DataTable from '@/components/customs/DataTable';
-import { Product, ProductsResponse } from '@/types/services/products';
-import { useQuery } from '@tanstack/react-query';
+import { Button } from '@/components/ui/button';
+import { Product } from '@/types/services/products';
+
 import { ColumnDef } from '@tanstack/react-table';
+import useSWR from 'swr';
 
 const columns: ColumnDef<Product>[] = [
   {
@@ -33,16 +34,28 @@ const columns: ColumnDef<Product>[] = [
   {
     accessorKey: 'on_sale',
     header: 'On Sale'
+  },
+  {
+    header: 'Actions',
+    cell: ({ row }) => {
+      return (
+        <div className="space-x-4">
+          <Button>View</Button>
+          <Button variant="outline">Update</Button>
+          <Button variant="destructive">Delete</Button>
+        </div>
+      );
+    }
   }
 ];
 
 export default function ProductList() {
-  const { data, isSuccess } = useQuery({ queryKey: ['products'], queryFn: getProducts });
+  const { data } = useSWR('http://localhost:8000/products');
 
   return (
     <div className="w-full">
-      <h1 className="text-xl font-semibold">Products</h1>
-      {isSuccess && (
+      <h1 className="text-xl font-semibold mb-6">Products</h1>
+      {data?.data && (
         <DataTable
           columns={columns}
           data={data.data}

@@ -1,10 +1,9 @@
 'use client';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { fetcher } from '@/lib/utils';
 import { PropsWithChildren } from 'react';
-
-const queryClient = new QueryClient();
+import { SWRConfig } from 'swr';
 
 export default function Providers({ children }: PropsWithChildren) {
-  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+  return <SWRConfig value={{ fetcher }}>{children}</SWRConfig>;
 }
