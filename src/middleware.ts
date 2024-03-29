@@ -4,7 +4,7 @@ import { ROUTES } from './constants/routes';
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const authenticatedRoutes = [ROUTES.home];
+  const authenticatedRoutes = [ROUTES.home, ROUTES.products];
   const restrictedRoutes = [ROUTES.signIn, ROUTES.signUp, ROUTES.forgotPassword];
 
   try {
@@ -29,5 +29,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/auth/:path*', '/', '/products'],
+  matcher: ['/auth/:path*', '/', '/products']
 };
